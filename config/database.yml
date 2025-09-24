@@ -1,21 +1,18 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
 
 development:
   <<: *default
-  database: mysite_development
 
 test:
   <<: *default
-  database: mysite_test
 
 production:
   <<: *default
-  database: mysite_production
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+
+# Solid Cable uses the same DB as production
+cable:
+  <<: *default

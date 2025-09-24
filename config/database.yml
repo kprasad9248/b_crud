@@ -16,3 +16,4 @@ production:
 # Solid Cable uses the same DB as production
 cable:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

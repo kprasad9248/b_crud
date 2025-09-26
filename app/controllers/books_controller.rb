@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :update, :destroy]
-
+   skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
+    before_action :set_book, only: [:show, :update, :destroy]
  
   def index
     @books = Book.all
@@ -15,10 +15,12 @@ class BooksController < ApplicationController
  
   def create
     @book = Book.new(book_params)
+    
     if @book.save
+     
       render json: @book, status: :created
     else
-      render json: @blok.errors, status: :unprocessable_entity
+      render json: @book.errors, status: :unprocessable_entity
     end
   end
 
